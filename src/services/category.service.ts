@@ -1,3 +1,4 @@
+import { Express } from 'express'; // ✅ add this import for Express.Multer.File
 import Category from '../models/category.model';
 import { uploadToCloudinary, deleteFromCloudinary } from '../config/cloudinary';
 import fs from 'fs';
@@ -12,6 +13,7 @@ export const createCategory = async (data: any, file?: Express.Multer.File) => {
       'categories',
       resourceType
     );
+
     imageData = {
       url: uploadResult.url,
       public_id: uploadResult.public_id,
@@ -30,9 +32,7 @@ export const createCategory = async (data: any, file?: Express.Multer.File) => {
 };
 
 export const getAllCategories = async () => {
-  return await Category.find().sort({
-    createdAt: -1,
-  });
+  return await Category.find().sort({ createdAt: -1 });
 };
 
 export const getCategoryById = async (id: string) => {
@@ -59,6 +59,7 @@ export const updateCategory = async (
       'categories',
       resourceType
     );
+
     data.image = {
       url: uploadResult.url,
       public_id: uploadResult.public_id,
