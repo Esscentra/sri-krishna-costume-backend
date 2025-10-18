@@ -10,7 +10,7 @@
     "strict": true,
     "skipLibCheck": true,
     "noImplicitAny": false,
-    "types": ["node"],
+    "types": [],
     "typeRoots": ["./node_modules/@types"]
   },
   "include": ["src/**/*"],
