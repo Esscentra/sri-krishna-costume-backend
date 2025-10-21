@@ -1,3 +1,4 @@
+import { Express } from 'express';
 import { Request, Response } from 'express';
 import { errorResponse, successResponse } from '../utils/response';
 import { costumeSchema, updateCostumeSchema } from '../schemas/costume.schemas';
