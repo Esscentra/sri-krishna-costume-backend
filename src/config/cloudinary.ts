@@ -9,6 +9,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
+// ✅ Upload to Cloudinary (image or video)
 export const uploadToCloudinary = async (
   filePath: string,
   folder: string,
@@ -18,6 +19,7 @@ export const uploadToCloudinary = async (
     folder,
     resource_type: resourceType,
   });
+
   return {
     url: result.secure_url,
     public_id: result.public_id,
@@ -25,8 +27,12 @@ export const uploadToCloudinary = async (
   };
 };
 
-export const deleteFromCloudinary = async (publicId: string) => {
-  await cloudinary.uploader.destroy(publicId, { resource_type: 'auto' });
+// ✅ Delete from Cloudinary (specify resource type)
+export const deleteFromCloudinary = async (
+  publicId: string,
+  resourceType: 'image' | 'video' = 'image'
+) => {
+  await cloudinary.uploader.destroy(publicId, { resource_type: resourceType });
 };
 
 export default cloudinary;

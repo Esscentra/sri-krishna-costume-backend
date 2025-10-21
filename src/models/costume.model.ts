@@ -1,45 +1,51 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-interface IMedia {
-  url: string;
-  public_id: string;
-  type: 'image' | 'video';
-}
-
 export interface ICostume extends Document {
   name: string;
   description?: string;
-  category: mongoose.Schema.Types.ObjectId;
   price: number;
-  availableSizes: string[];
+  category: mongoose.Types.ObjectId; // Reference to Category
+  images?: {
+    url: string;
+    public_id: string;
+  }[];
+  videos?: {
+    url: string;
+    public_id: string;
+  }[];
   stock: number;
-  images: IMedia[];
-  videos: IMedia[];
-  isAvailable: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
 
-const mediaSchema = new Schema<IMedia>(
-  {
-    url: { type: String, required: true },
-    public_id: { type: String, required: true },
-    type: { type: String, enum: ['image', 'video'], required: true },
-  },
-  { _id: false }
-);
-
 const costumeSchema = new Schema<ICostume>(
   {
-    name: { type: String, required: true },
-    description: String,
-    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+    name: { type: String, required: true, trim: true },
+    description: { type: String },
     price: { type: Number, required: true },
-    availableSizes: [{ type: String }],
-    stock: { type: Number, default: 0 },
-    images: [mediaSchema],
-    videos: [mediaSchema],
-    isAvailable: { type: Boolean, default: true },
+    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+
+    // ✅ Multiple Images (Cloudinary)
+    images: {
+      type: [
+        {
+          url: { type: String, required: true },
+          public_id: { type: String, required: true },
+        },
+      ],
+      default: [],
+    },
+    videos: {
+      type: [
+        {
+          url: { type: String, required: true },
+          public_id: { type: String, required: true },
+        },
+      ],
+      default: [],
+    },
+
+    stock: { type: Number, default: 1 },
   },
   { timestamps: true }
 );
