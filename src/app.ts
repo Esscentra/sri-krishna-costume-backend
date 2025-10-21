@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import adminRoutes from './routes/admin.routes';
 import categoryRoutes from './routes/category.routes';
+import CostumeRoutes from './routes/costume.routes';
 import morgan from 'morgan';
 
 const app: Application = express();
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use('/api/admin', adminRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/costume', CostumeRoutes);
 
 // ✅ Health check route
 app.get('/', (_req, res) => {
