@@ -31,13 +31,14 @@ export const getAllCategories = async (_req: Request, res: Response) => {
 
 export const getCategoryById = async (id: string) => {
   // 1. Get category details
-  const category = await Category.findById(id);
+  const category = await Category.findById(id).lean(); // .lean() to get plain JS object
   if (!category) throw new Error('Category not found');
 
   // 2. Get all costumes related to this category
   const costumes = await Costume.find({ category: id });
 
-  return { category, costumes }; // ✅ returning both together
+  // 3. Attach costumes inside category
+  return { ...category, costumes }; // ✅ now category has a `costumes` field
 };
 
 export const updateCategory = async (req: Request, res: Response) => {
