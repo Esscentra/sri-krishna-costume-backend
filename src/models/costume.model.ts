@@ -4,15 +4,10 @@ export interface ICostume extends Document {
   name: string;
   description?: string;
   price: number;
-  category: mongoose.Types.ObjectId; // Reference to Category
-  images?: {
-    url: string;
-    public_id: string;
-  }[];
-  videos?: {
-    url: string;
-    public_id: string;
-  }[];
+  category: mongoose.Types.ObjectId;
+  images?: { url: string; public_id: string }[];
+  videos?: { url: string; public_id: string }[];
+  size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'; // ✅ ADDED HERE
   stock: number;
   createdAt: Date;
   updatedAt: Date;
@@ -25,7 +20,6 @@ const costumeSchema = new Schema<ICostume>(
     price: { type: Number, required: true },
     category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
 
-    // ✅ Multiple Images (Cloudinary)
     images: {
       type: [
         {
@@ -35,6 +29,7 @@ const costumeSchema = new Schema<ICostume>(
       ],
       default: [],
     },
+
     videos: {
       type: [
         {
@@ -43,6 +38,13 @@ const costumeSchema = new Schema<ICostume>(
         },
       ],
       default: [],
+    },
+
+    // ✅ Size ENUM (safe + prevents invalid data)
+    size: {
+      type: String,
+      enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      required: true,
     },
 
     stock: { type: Number, default: 1 },

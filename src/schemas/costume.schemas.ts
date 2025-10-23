@@ -11,7 +11,6 @@ export const costumeSchema = z.object({
     .max(1000, 'Description must be under 1000 characters')
     .optional(),
 
-  // ✅ Preprocess: convert string to number
   price: z.preprocess((val) => {
     if (typeof val === 'string') return parseFloat(val);
     if (typeof val === 'number') return val;
@@ -26,7 +25,11 @@ export const costumeSchema = z.object({
     return 1; // default
   }, z.number().min(0, 'Stock cannot be negative')),
 
-  // ✅ Multiple Images
+  // ✅ Required size field with ENUM validation
+  size: z.enum(['XS', 'S', 'M', 'L', 'XL', 'XXL'], {
+    message: 'Size must be one of XS, S, M, L, XL, XXL',
+  }),
+
   images: z
     .array(
       z.object({
@@ -36,7 +39,6 @@ export const costumeSchema = z.object({
     )
     .optional(),
 
-  // ✅ Multiple Videos
   videos: z
     .array(
       z.object({
@@ -47,9 +49,9 @@ export const costumeSchema = z.object({
     .optional(),
 });
 
-// Partial schema for updates
+// ✅ Partial schema for updates
 export const updateCostumeSchema = costumeSchema.partial();
 
-// TS types
+// ✅ Types
 export type CostumeInput = z.infer<typeof costumeSchema>;
 export type CostumeUpdateInput = z.infer<typeof updateCostumeSchema>;
