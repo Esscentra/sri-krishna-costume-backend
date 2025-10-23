@@ -5,8 +5,6 @@ import {
   updateCategorySchema,
 } from '../schemas/category.schema';
 import * as CategoryService from '../services/category.service';
-import Category from '../models/category.model';
-import Costume from '../models/costume.model';
 
 export const createCategory = async (req: Request, res: Response) => {
   try {
@@ -29,18 +27,15 @@ export const getAllCategories = async (_req: Request, res: Response) => {
   }
 };
 
-export const getCategoryById = async (id: string) => {
-  // 1. Get category details
-  const category = await Category.findById(id).lean(); // .lean() to get plain JS object
-  if (!category) throw new Error('Category not found');
-
-  // 2. Get all costumes related to this category
-  const costumes = await Costume.find({ category: id });
-
-  // 3. Attach costumes inside category
-  return { ...category, costumes }; // ✅ now category has a `costumes` field
+export const getCategoryById = async (req: Request, res: Response) => {
+  try {
+    const categoryId = req.params.id; // ✅ only the ID string
+    const data = await CategoryService.getCategoryById(categoryId);
+    return successResponse(res, 'Category fetched successfully', data);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
 };
-
 export const updateCategory = async (req: Request, res: Response) => {
   try {
     const parsedData = updateCategorySchema.parse(req.body);
