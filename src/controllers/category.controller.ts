@@ -29,13 +29,13 @@ export const getAllCategories = async (_req: Request, res: Response) => {
 
 export const getCategoryById = async (req: Request, res: Response) => {
   try {
-    const category = await CategoryService.getCategoryById(req.params.id);
-    return successResponse(res, 'Category fetched Sucessfully', category);
+    const categoryId = req.params.id; // ✅ only the ID string
+    const data = await CategoryService.getCategoryById(categoryId);
+    return successResponse(res, 'Category fetched successfully', data);
   } catch (error) {
     return errorResponse(res, error);
   }
 };
-
 export const updateCategory = async (req: Request, res: Response) => {
   try {
     const parsedData = updateCategorySchema.parse(req.body);

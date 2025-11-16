@@ -1,11 +1,19 @@
 {
+  "name": "sri-krishna-costume-backend",
+  "version": "1.0.0",
+  "main": "dist/server.js",
+  "type": "commonjs",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js"
   },
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^1.13.2",
+=======
+    "@types/node": "^24.8.1",
+>>>>>>> e2edb4c7958ab2923410efc46f8b1c61ea20093a
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.7.0",
     "cors": "^2.8.5",
@@ -16,6 +24,7 @@
     "mongoose": "^8.19.1",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
+    "typescript": "^5.9.3",
     "winston": "^3.18.3",
     "zod": "^4.1.12"
   },
@@ -27,8 +36,10 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/multer": "^2.0.0",
-    "@types/node": "^24.7.2",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.9.3"
-  }
+    "ts-node-dev": "^2.0.0"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "license": "MIT"
 }
