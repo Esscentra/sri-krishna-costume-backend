@@ -2,12 +2,8 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import adminRoutes from './routes/admin.routes';
 import categoryRoutes from './routes/category.routes';
-<<<<<<< HEAD
-import googleReviewRoutes from './routes/googleReview.routes'; 
-
-=======
+import googleReviewRoutes from './routes/googleReview.routes';
 import CostumeRoutes from './routes/costume.routes';
->>>>>>> e2edb4c7958ab2923410efc46f8b1c61ea20093a
 import morgan from 'morgan';
 
 const app: Application = express();
@@ -17,13 +13,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+
+// ✅ Routes
 app.use('/api/admin', adminRoutes);
 app.use('/api/categories', categoryRoutes);
-<<<<<<< HEAD
-app.use('/api/google-reviews', googleReviewRoutes); 
-=======
+app.use('/api/google-reviews', googleReviewRoutes);
 app.use('/api/costume', CostumeRoutes);
->>>>>>> e2edb4c7958ab2923410efc46f8b1c61ea20093a
 
 // ✅ Health check route
 app.get('/', (_req, res) => {
