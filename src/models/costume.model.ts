@@ -9,6 +9,7 @@ export interface ICostume extends Document {
   videos?: { url: string; public_id: string }[];
   size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'; // ✅ ADDED HERE
   stock: number;
+  transactionType: 'buy' | 'rent' | 'both';
   createdAt: Date;
   updatedAt: Date;
 }
@@ -48,6 +49,12 @@ const costumeSchema = new Schema<ICostume>(
     },
 
     stock: { type: Number, default: 1 },
+    transactionType: {
+      type: String,
+      enum: ['buy', 'rent', 'both'],
+      required: true,
+      default: 'buy',
+    },
   },
   { timestamps: true }
 );
