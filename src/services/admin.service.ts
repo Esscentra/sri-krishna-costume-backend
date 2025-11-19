@@ -13,17 +13,33 @@ export class AdminService {
   }
 
   async login(email: string, password: string) {
+    console.log('🔐 Login attempt:', { email });
+
     const admin = await Admin.findOne({ email });
-    if (!admin) throw new Error('Admin not found');
+
+    if (!admin) {
+      console.log('❌ Admin not found for email:', email);
+      throw new Error('Admin not found');
+    }
+
+    console.log('✅ Admin found:', { id: admin._id, email: admin.email });
 
     const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) throw new Error('Invalid credentials');
+
+    if (!isMatch) {
+      console.log('❌ Invalid password for email:', email);
+      throw new Error('Invalid credentials');
+    }
+
+    console.log('🔑 Password matched. Generating token...');
 
     const accessToken = jwt.sign(
       { id: admin._id, email: admin.email, role: admin.role },
       process.env.JWT_ACCESS_SECRET!,
       { expiresIn: '1d' }
     );
+
+    console.log('✅ Access token generated for:', email);
 
     return { admin, accessToken };
   }

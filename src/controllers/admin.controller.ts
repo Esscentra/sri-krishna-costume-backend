@@ -25,11 +25,14 @@ export const loginAdmin = async (
   next: NextFunction
 ) => {
   try {
+    console.log('📩 Incoming Login Request:', req.body.email);
     const validatedData = loginAdminSchema.parse(req.body);
+    console.log('✔️ Validation Passed for:', validatedData.email);
     const { admin, accessToken } = await adminService.login(
       validatedData.email,
       validatedData.password
     );
+    console.log('🎉 Login Successful for:', admin.email);
     return successResponse(res, 'Login successful', { admin, accessToken });
   } catch (error) {
     return errorResponse(res, error);
