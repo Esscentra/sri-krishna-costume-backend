@@ -15,6 +15,7 @@ app.use(
       "http://localhost:3000",
       "http://localhost:5173",
       "https://srikrishnacostume.vercel.app",
+      "https://srikrishnacostumes.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
