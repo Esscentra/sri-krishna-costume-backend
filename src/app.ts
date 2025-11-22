@@ -19,7 +19,9 @@ app.use(
       "https://www.skcostumes.com/",
       "https://www.skcostumes.com",
       "https://www.skcostumes.com",
-      "www.skcostumes.com/"
+      "www.skcostumes.com/",
+      "https://skcostumes.com",
+      "https://skcostumes.com/",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
