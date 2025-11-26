@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+const transactionTypeEnum = z.enum(["buy", "rent", "both"]);
+
 export const costumeSchema = z.object({
   name: z
     .string()
@@ -10,6 +12,8 @@ export const costumeSchema = z.object({
     .string()
     .max(1000, 'Description must be under 1000 characters')
     .optional(),
+  
+  transactionType: transactionTypeEnum,
 
   price: z.preprocess((val) => {
     if (typeof val === 'string') return parseFloat(val);
