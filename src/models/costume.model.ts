@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema } from "mongoose";
 
 export interface ICostume extends Document {
   name: string;
@@ -7,8 +7,9 @@ export interface ICostume extends Document {
   category: mongoose.Types.ObjectId;
   images?: { url: string; public_id: string }[];
   videos?: { url: string; public_id: string }[];
-  size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'; // ✅ ADDED HERE
+  size: "XS" | "S" | "M" | "L" | "XL" | "XXL"; // ✅ ADDED HERE
   stock: number;
+  transactionType: "buy" | "rent" | "both";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,8 +18,14 @@ const costumeSchema = new Schema<ICostume>(
   {
     name: { type: String, required: true, trim: true },
     description: { type: String },
-    price: { type: Number, required: true },
-    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+    price: { type: Number },
+    category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
+    transactionType: {
+      type: String,
+      enum: ["buy", "rent", "both"],
+      required: true,
+      default: "buy",
+    },
 
     images: {
       type: [
@@ -43,7 +50,7 @@ const costumeSchema = new Schema<ICostume>(
     // ✅ Size ENUM (safe + prevents invalid data)
     size: {
       type: String,
-      enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      enum: ["XS", "S", "M", "L", "XL", "XXL"],
       required: true,
     },
 
@@ -52,5 +59,5 @@ const costumeSchema = new Schema<ICostume>(
   { timestamps: true }
 );
 
-const Costume = mongoose.model<ICostume>('Costume', costumeSchema);
+const Costume = mongoose.model<ICostume>("Costume", costumeSchema);
 export default Costume;
