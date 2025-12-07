@@ -12,16 +12,17 @@ const app: Application = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
+        "http://localhost:3000",
       "http://localhost:5173",
+
+      // ✅ Vercel frontend domains
       "https://srikrishnacostume.vercel.app",
       "https://srikrishnacostumes.vercel.app",
-      "https://www.skcostumes.com/",
+
+      // ✅ Main domains (NO TRAILING SLASH)
       "https://www.skcostumes.com",
-      "https://www.skcostumes.com",
-      "www.skcostumes.com/",
       "https://skcostumes.com",
-      "https://skcostumes.com/",
+      "https://skcosumtesfrontend-tb5b.vercel.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
